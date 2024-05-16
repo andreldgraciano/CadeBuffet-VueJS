@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h1>CADE BUFFET? VueJS</h1>
+
+    <!-- reatividade -->
+    <div class="search">
+      <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Entre com um nome">
+      <!-- <button class="button-search" v-on:click="getData()">Get dados</button> <br> -->
+    </div>
+
+    <div class="notice" v-if="listResultBuffets.length === 0">
+      Nenhum buffet "{{searchText}}" encontrado!
+    </div>
+
+    <ul v-if="page == 'buffets'">
+      <li v-for="item in listResultBuffets" :key="item.id">
+        <div class="card" @click="handleClick(item.id)" style="cursor: pointer;">
+          <h2>{{ item.brand_name }}</h2>
+          <p>{{ item.description }}</p>
+        </div>
+      </li>
+    </ul>
+
+    <div v-if="page == 'buffet'">
+      entrou
+      <li v-for="item in listResultBuffets" :key="item.id">
+        <div class="card" @click="handleClick(item.id)" style="cursor: pointer;">
+          <h2>{{ item.brand_name }}</h2>
+          <p>{{ item.description }}</p>
+          <p>phone: {{ item.phone }}</p> <br>
+          <p>email: {{ item.email }}</p> <br>
+          <p>address: {{ item.address }}</p> <br>
+          <p>district: {{ item.district }}</p> <br>
+          <p>state: {{ item.state }}</p> <br>
+          <p>city: {{ item.city }}</p> <br>
+          <p>zip_code: {{ item.zip_code }}</p> <br>
+          <p>payment: {{ item.payment }}</p> <br>
+        </div>
+      </li>
+    </div>
+    
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
