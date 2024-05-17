@@ -9,18 +9,19 @@
 <body>
 
   <div id="app">
-    <h1>CADE BUFFET? VueJS</h1>
-    <button v-on:click="buttonBuffets()">List Buffets</button> <br><br>
-    <!-- <button class="button-search" v-on:click="getData()">Get dados</button> <br> -->
+    <div style="background-color: rgb(191, 104, 121); padding: 10px 10px 20px 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h1>CADE BUFFET? VueJS</h1>
+      <div class="search">
+        <button class="btn" v-on:click="buttonBuffets()">List Buffets</button> <br><br>
+        <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Enter a buffet name">
+        <div class="notice" v-if="listResultBuffets.length === 0">
+          No buffet "{{searchText}}" found
+        </div>
+      </div>
 
-    <!-- reatividade -->
-    <div class="search">
-      <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Enter a buffet name">
     </div>
 
-    <div class="notice" v-if="listResultBuffets.length === 0">
-      <br> No buffet "{{searchText}}" found
-    </div>
+    
 
     <div v-if="page == 'buffets'" class="buffets">
       <div v-for="item in listResultBuffets" :key="item.id">
@@ -60,9 +61,9 @@
             <table>
               <tr>
                 <td style="background-color: antiquewhite;"></td>
-                <td>base price</td>
-                <td>additional per person</td>
-                <td>value overtime</td>
+                <td>Base price</td>
+                <td>Additional per person</td>
+                <td>Value overtime</td>
               </tr>
               <tr>
                 <td>Day of Week</td>
@@ -88,15 +89,16 @@
             </div>
             <!-- <input class="input-amountPeople" type="text" v-model="amountPeopleText" name="" id="" placeholder="Number of guests"> -->
             <div>
-              <p>Guests: {{ item.min_people }} min | {{ item.max_people }} max</p>
+              <p>Guests: {{ item.min_people }} to {{ item.max_people }} </p>
               <label for="amount-people">Number of Guests</label>
               <input class="input-amountPeople" type="number" v-model.number="amountPeople" id="amount-people" placeholder="Number of guests">
             </div>
             <!-- <button v-on:click="checkStatus(item.id, item.selectedDate)" class="button-status">Check Status</button> -->
-            <button v-on:click="checkStatus(item.id)" class="button-status">Check Status</button>
+            <button v-on:click="checkStatus(item.id)" class="btn">Check Status</button>
             <div class="description-status">
               <p v-if="item.status">Status: {{ item.status }}</p>
               <p v-if="item.status === 'Available'">
+                Name: {{ item.event_name }}<br>
                 Date: {{ item.date }}<br>
                 Amount of People: {{ item.amount_people }}<br>
                 Total Value: {{ item.total_value }}

@@ -67,7 +67,7 @@ const app = Vue.createApp({
       if (event) {
         event.status = data.status;
         if (data.status === 'Available') {
-          event.name = data.name;
+          event.event_name = data.event_name;
           event.date = date;
           event.amount_people = amount_people;
           event.total_value = data.total_value;
