@@ -110,3 +110,15 @@ th {
 td {
   color: #333333;
 }
+
+#doc{
+  background-color: #000;
+  color: green;
+
+  section{
+    background-color: #2e2d2d;
+    margin: 40px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+}
