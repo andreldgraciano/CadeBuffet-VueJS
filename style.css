@@ -26,6 +26,7 @@ body{
   align-items: center;
   padding: 20px;
   background-color: antiquewhite;
+  border: 2px dotted rgb(184, 170, 152);
 }
 
 .button-status{
@@ -40,8 +41,6 @@ body{
 }
 
 .events{
-  border: 1px solid black;
-  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 40px;
