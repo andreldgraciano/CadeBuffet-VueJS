@@ -10,7 +10,10 @@
 
   <div id="app">
     <div style="background-color: rgb(191, 104, 121); padding: 10px 10px 20px 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
-      <h1>CADE BUFFET? VueJS</h1>
+      <div style="display: flex; justify-content: space-between;">
+        <h1>CADE BUFFET? VueJS</h1>
+        <a style="color: aliceblue; background-color: black; height: 50px; border-radius: 10px; text-align: center; display: flex; align-items: center; justify-content: center; padding: 0 20px;" href="doc.html">DOCUMENTATION</a>
+      </div>
       <div class="search">
         <button class="btn" v-on:click="buttonBuffets()">List Buffets</button> <br><br>
         <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Enter a buffet name">

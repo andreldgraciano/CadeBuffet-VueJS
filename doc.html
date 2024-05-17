@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation API CADE BUFFET?</title>
+</head>
+<body>
+  <section>
+    <h2>api/v1/buffets</h2>
+    <p>Para receber todos os buffets</p>
+  </section>
+  <section>
+    <h2>api/v1/buffets/id</h2>
+    <p>Para receber um buffet especifico indicado pelo id</p>
+  </section>
+  <section>
+    <h2>api/v1/events_buffet/id</h2>
+    <p>Para receber todos os eventos realizados pelo buffet indicado pelo id</p>
+  </section>
+  <section>
+    <h2>v1/search_buffet/nomeBuffet</h2>
+    <p>Para filtrar buffets pelo nome</p>
+  </section>
+  <section>
+    <h2>api/v1/events/1?date=2024-10-27&amount_people=150</h2>
+    <p>Para verificar disponibilidade de um evento, passando id do buffet, parametro date, e amount_people</p>
+    <p>Possiveis respostas:</p>
+    <ul>
+      <li>{status: "Unavailable for today or old dates"}</li>
+      <li>{status: "Unavailable for date #{date}"}</li>
+      <li>{ status: 'Available', event_name: event.name, date: param_date, amount_people: param_amount_people, total_value: total_value }</li>
+      <li>{status: 'Event unavailable for this number of people', min_people: event.min_people, max_people: event.max_people}</li>
+    </ul>
+  </section>
+</body>
+</html>
