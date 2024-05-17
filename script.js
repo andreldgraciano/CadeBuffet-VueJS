@@ -5,19 +5,31 @@ const app = Vue.createApp({
 
       listBuffets: [],
 
+      listEvents: [],
+
+      dateText: null,
+
+      amountPeople: null,
+
       page: 'buffets'
+    }
+  },
+
+  watch: {
+    searchText(newValue) {
+      if (newValue && this.page !== 'buffets') {
+        this.page = 'buffets';
+      }
     }
   },
 
   computed:{
     listResultBuffets(){
       if(this.searchText){
-        // Procura pelos buffets
         return this.listBuffets.filter(contact => {
           return contact.brand_name.toLowerCase().includes(this.searchText.toLowerCase());
         });
       }else{
-        // Se nao encontrar, retorna todos os buffets
         return this.listBuffets;
       }
     }
@@ -25,33 +37,50 @@ const app = Vue.createApp({
 
   async mounted() {
     this.listResultBuffets = await this.getBuffets();
-    this.listResultEvents = await this.getEvents();
   },
 
   methods: {
-    // changeData(){
-    //   this.firstName = 'Fernando',
-    //   this.lastName = 'Lucas',
-    //   this.email = 'fernando.lucas@gmail.com',
-    //   this.city = 'Caratinga',
-    //   this.picture = 'https://randomuser.me/api/portraits/men/56.jpg'
-    // },
+
+    buttonBuffets(){
+      this.page = 'buffets',
+      this.searchText = ''
+    },
+
     handleClick(BuffetId) {
-      // Faça algo com o BuffetId clicado
-      console.log('Você clicou em:', BuffetId);
+      this.searchText = '',
       this.page = 'buffet'
+      this.selectedBuffet = this.listResultBuffets.find(buffet => buffet.id === BuffetId);
+      this.getEvents(BuffetId)
+    },
+
+    async checkStatus(eventId){
+      let date = this.dateText;
+      let amount_people = this.amountPeople;
+      console.log("eventId:", eventId);
+      console.log("Selected Date:", date);
+      console.log("Amount of People:", amount_people);
+
+      let response = await fetch('http://localhost:3000/api/v1/events/' + eventId + '?date=' + date + '&amount_people=' + amount_people);
+      let data = await response.json();
+      
+      let event = this.listEvents.find(event => event.id === eventId);
+      if (event) {
+        event.status = data.status;
+        if (data.status === 'Available') {
+          event.name = data.name;
+          event.date = date;
+          event.amount_people = amount_people;
+          event.total_value = data.total_value;
+        }else if (data.status === 'Event unavailable for this number of people') {
+          event.min_people = data.min_people;
+          event.max_people = max_people;
+        }
+      }
     },
 
     async getBuffets(){
       let response = await fetch('http://localhost:3000/api/v1/buffets');
-
-      // Exibindo os dados no console do navegador
-      // console.log(response.json());
-
-      // Armazenando os dados do json
       let data = await response.json();
-
-      // Remover todos os items do array listBuffets
       this.listBuffets = [];
       
       data.forEach(item =>{
@@ -69,43 +98,42 @@ const app = Vue.createApp({
         buffet.zip_code = item.zip_code;
         buffet.payment = item.payment;
 
-
         this.listBuffets.push(buffet);
       })
     },
 
-    async getEvents(){
-      let response = await fetch('http://localhost:3000/api/v1/buffets');
-
-      // Exibindo os dados no console do navegador
-      // console.log(response.json());
-
-      // Armazenando os dados do json
+    async getEvents(BuffetId){
+      let response = await fetch('http://localhost:3000/api/v1/events_buffet/' + BuffetId);
       let data = await response.json();
-
-      // Remover todos os items do array listBuffets
-      this.listBuffets = [];
+      this.listEvents = [];
       
       data.forEach(item =>{
-        var buffet = new Object();
+        var event = new Object();
 
-        buffet.id = item.id;
-        buffet.brand_name = item.brand_name;
-        buffet.description = item.description;
+        event.id = item.id;
+        event.name = item.name;
+        event.description = item.description;
+        event.min_people = item.min_people;
+        event.max_people = item.max_people;
+        event.duration = item.duration;
+        event.menu = item.menu;
+        event.address = item.address;
+        event.alcoholic_drink = item.alcoholic_drink;
+        event.decoration = item.decoration;
+        event.parking = item.parking;
+        event.venue_preference = item.venue_preference;
+        event.base_price = item.base_price;
+        event.additional_per_person = item.additional_per_person;
+        event.value_extra_hour = item.value_extra_hour;
+        event.base_price_weekend = item.base_price_weekend;
+        event.additional_per_person_weekend = item.additional_per_person_weekend;
+        event.value_extra_hour_weekend = item.value_extra_hour_weekend;
 
-        this.listBuffets.push(buffet);
+        this.listEvents.push(event);
       })
     }
-    // ,
-    // removeContact(index){
-    //   // console.log('Index do objeto selecionado: ' + index);
 
-    //   // Excluindo um objeto do index selecionado
-    //   this.listBuffets.splice(index, 1);
-    // }
   }
 });
 
-// o método mount, fica monitorando e gerenciando o conteudo de app
-// que criamos na index
 app.mount('#app');

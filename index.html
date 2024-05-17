@@ -3,48 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>CADE BUFFET? VueJS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div id="app">
     <h1>CADE BUFFET? VueJS</h1>
+    <button v-on:click="buttonBuffets()">List Buffets</button> <br><br>
+    <!-- <button class="button-search" v-on:click="getData()">Get dados</button> <br> -->
 
     <!-- reatividade -->
     <div class="search">
-      <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Entre com um nome">
-      <!-- <button class="button-search" v-on:click="getData()">Get dados</button> <br> -->
+      <input class="input-search" type="text" v-model="searchText" name="" id="" placeholder="Enter a buffet name">
     </div>
 
     <div class="notice" v-if="listResultBuffets.length === 0">
-      Nenhum buffet "{{searchText}}" encontrado!
+      <br> No buffet "{{searchText}}" found
     </div>
 
-    <ul v-if="page == 'buffets'">
-      <li v-for="item in listResultBuffets" :key="item.id">
-        <div class="card" @click="handleClick(item.id)" style="cursor: pointer;">
+    <div v-if="page == 'buffets'" class="buffets">
+      <div v-for="item in listResultBuffets" :key="item.id">
+        <div class="card-buffet" @click="handleClick(item.id)" style="cursor: pointer;">
           <h2>{{ item.brand_name }}</h2>
           <p>{{ item.description }}</p>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
 
-    <div v-if="page == 'buffet'">
-      entrou
-      <li v-for="item in listResultBuffets" :key="item.id">
-        <div class="card" @click="handleClick(item.id)" style="cursor: pointer;">
-          <h2>{{ item.brand_name }}</h2>
-          <p>{{ item.description }}</p>
-          <p>phone: {{ item.phone }}</p> <br>
-          <p>email: {{ item.email }}</p> <br>
-          <p>address: {{ item.address }}</p> <br>
-          <p>district: {{ item.district }}</p> <br>
-          <p>state: {{ item.state }}</p> <br>
-          <p>city: {{ item.city }}</p> <br>
-          <p>zip_code: {{ item.zip_code }}</p> <br>
-          <p>payment: {{ item.payment }}</p> <br>
+    <div v-if="page == 'buffet'" class="card-buffet-events">
+
+      <div class="buffet-detail">
+        <h2>{{ selectedBuffet.brand_name }}</h2>
+        <p>{{ selectedBuffet.description }}</p>
+        <p>phone: {{ selectedBuffet.phone }}</p>
+        <p>email: {{ selectedBuffet.email }}</p>
+        <p>address: {{ selectedBuffet.address }}</p>
+        <p>district: {{ selectedBuffet.district }}</p>
+        <p>state: {{ selectedBuffet.state }}</p>
+        <p>city: {{ selectedBuffet.city }}</p>
+        <p>zip_code: {{ selectedBuffet.zip_code }}</p>
+        <p>payment: {{ selectedBuffet.payment }}</p>
+      </div>
+
+      <div class="events">
+
+        <div v-for="item in listEvents" :key="item.id" class="card-event">
+          <div>
+            <h2>{{ item.name }}</h2>
+            <h3>{{ item.description }} </h3>
+            <p>Event duration: {{ item.duration }} min <br>
+            Menu: {{ item.menu }} <br>
+            Address: {{ item.address }} <br>
+            {{ item.alcoholic_drink }} - {{ item.decoration }} - {{ item.parking }} - {{ item.venue_preference }}
+
+            <table>
+              <tr>
+                <td style="background-color: antiquewhite;"></td>
+                <td>base price</td>
+                <td>additional per person</td>
+                <td>value overtime</td>
+              </tr>
+              <tr>
+                <td>Day of Week</td>
+                <td>{{ item.base_price }}</td>
+                <td>{{ item.additional_per_person }}</td>
+                <td>{{ item.value_extra_hour }}</td>
+              </tr>
+              <tr>
+                <td>Weekend</td>
+                <td>{{ item.base_price_weekend }}</td>
+                <td>{{ item.additional_per_person_weekend }}</td>
+                <td>{{ item.value_extra_hour_weekend }}</td>
+              </tr>
+            </table>
+
+          </div>
+
+          <div class="status-verify">
+            <!-- <input class="input-date" type="text" v-model="dateText" name="" id="" placeholder="Select event date"> -->
+            <div>
+              <label for="event-date">Event Date</label>
+              <input class="input-date" type="date" v-model="dateText" id="event-date">
+            </div>
+            <!-- <input class="input-amountPeople" type="text" v-model="amountPeopleText" name="" id="" placeholder="Number of guests"> -->
+            <div>
+              <p>Guests: {{ item.min_people }} min | {{ item.max_people }} max</p>
+              <label for="amount-people">Number of Guests</label>
+              <input class="input-amountPeople" type="number" v-model.number="amountPeople" id="amount-people" placeholder="Number of guests">
+            </div>
+            <!-- <button v-on:click="checkStatus(item.id, item.selectedDate)" class="button-status">Check Status</button> -->
+            <button v-on:click="checkStatus(item.id)" class="button-status">Check Status</button>
+            <div class="description-status">
+              <p v-if="item.status">Status: {{ item.status }}</p>
+              <p v-if="item.status === 'Available'">
+                Date: {{ item.date }}<br>
+                Amount of People: {{ item.amount_people }}<br>
+                Total Value: {{ item.total_value }}
+              </p>
+              <p v-if="item.status === 'Event unavailable for this number of people'">
+                Min: {{ item.min_people }}<br>
+                Max: {{ item.max_people }}
+              </p>
+            </div>
+          </div>
         </div>
-      </li>
+
+      </div>
+
     </div>
     
   </div>
