@@ -15,14 +15,14 @@ body{
 }
 
 .input-search:focus{
-  outline: 2px solid rgb(66, 10, 21);
+  outline: 2px solid rgb(56, 173, 138);
 }
 
 .btn{
   width: 158px;
   height: 40px;
   font-size: 18px;
-  background-color: rgb(146, 75, 89);
+  background-color: rgb(24, 105, 80);
   border: none;
 }
 
@@ -40,13 +40,14 @@ body{
   display: flex;
   gap: 30px;
   margin: 20px;
+  flex-wrap: wrap;
 }
 
 .card-buffet{
   display: inline-block;
   padding: 20px;
-  background-color: antiquewhite;
-  border: 2px dotted rgb(184, 170, 152);
+  background-color: rgb(195, 213, 207);
+  border: 2px dotted rgb(165, 207, 195);
 }
 
 .card-buffet-events{
@@ -59,8 +60,8 @@ body{
   gap: 30px;
   align-items: center;
   padding: 20px;
-  background-color: antiquewhite;
-  border: 2px dotted rgb(184, 170, 152);
+  background-color: rgb(195, 213, 207);
+  border: 2px dotted rgb(195, 213, 207);
 }
 
 .button-status{
@@ -112,13 +113,15 @@ td {
 }
 
 #doc{
-  background-color: #000;
+  background-color: #FFF;
   color: green;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 18px;
 
   section{
     background-color: #2e2d2d;
-    margin: 40px;
+    margin: 10px;
     padding: 20px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
   }
 }
